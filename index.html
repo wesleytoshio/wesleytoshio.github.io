@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Receitas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="main.css">
+    
+    <style>
+        body {
+            background-color: #1f2937;
+        }
+    </style>
+=
+</head>
+<body class="flex  h-screen w-screen">
+    <div class="flex-1 flex bg-gray-800 rounded-lg shadow-lg  rounded-lg overflow-hidden">
+        <!-- Formulário -->
+        <div class="w-1/2 p-8 select-none">
+            <h1 class="text-2xl font-bold text-white mb-4">Criar Receitas</h1>
+            <form id="recipeForm" class="space-y-4">
+                <div>
+                    <label for="cds" class="block font-medium text-white py-2">Coordenadas: Use (;) para separar</label>
+                    <input type="text" id="cds" name="cds" placeholder="-100.89, 995.54, 235.76"
+                        class="py-2 px-4 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                </div>
+                <div>
+                    <label for="anim" class="block font-medium text-white py-2 flex justify-between">
+                        <div>Animação</div>
+                        <div class="flex items-center">
+                            <input  id="animType" type="checkbox" name="animType"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="animType" class="ml-2 text-sm font-medium text-gray-400 dark:text-gray-500">Use task</label>
+                        </div>
+                    </label>
+                    <input type="text" id="anim" name="anim" placeholder="PROP_HUMAN_BBQ"
+                        class="py-2 px-4 w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                </div>
+                <div>
+                    <label class="block font-medium text-white py-2">Itens</label>
+                    <div id="itemsContainer" class="space-y-2 item">
+                        <div class="flex space-x-2">
+                            <input type="text" name="index" placeholder="ID"
+                            class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                            <input type="text" name="name" placeholder="Nome"
+                                class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                        </div>
+                        <div class="flex space-x-2">
+                            <input type="number" name="amount" placeholder="Quant."
+                                class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                            <input type="number" name="weight" step="0.01" placeholder="Peso"
+                                class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                        </div>
+                        <div>
+                            <label class="py-2 block font-medium text-white">Ingredientes</label>
+                            <div class="space-y-2 ">
+                                <div class="flex space-x-2 recipe">
+                                    <input type="text" name="index" placeholder="ID"
+                                        class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                                    <input type="text" name="name" placeholder="Nome"
+                                        class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                                    <input type="text" name="amount" placeholder="Quant."
+                                        class="py-2 px-4 w-1/2 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-700 text-white">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="flex justify-between">
+                    <button type="button" id="addItemBtn" class="mt-4 bg-transparent hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded">+
+                        Ingredientes</button>
+                    <button type="submit" class="mt-4 bg-green-500 text-white font-semibold px-4 py-2 rounded">Criar receita</button>
+                </div>
+            </form>
+        </div>
+    
+        <!-- Output do Código -->
+        <div class=" w-full p-8 bg-gray-900 text-white">
+            <div class="text-sm text-gray-400">Código:</div>
+            <pre class="py-4">
+                <code id="output" class="language-lua"></code>
+            </pre>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>=
+    <script src="./main.js"></script>
+</body>
+</html>
